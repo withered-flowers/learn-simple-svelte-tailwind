@@ -98,7 +98,7 @@ Disclaimer:
 ## FirstComponent
 1. create file `src/lib/FirstComponent.svelte`
 1. edit `FirstComponent.svelte`
-    ```svelte
+    ```html
     <script>
       // every value declare will be reactive in svelte
       // svelte reactivity is by assignments
@@ -136,7 +136,7 @@ Disclaimer:
     </div>
     ```
 1. edit `App.svelte`
-    ```svelte
+    ```html
     <script>
       // import the component here
       import FirstComponent from "./lib/FirstComponent.svelte";
@@ -154,6 +154,85 @@ Disclaimer:
     ```
 
 ## SecondComponent
+1. create file `src/lib/SecondComponent.svelte`
+1. create file `src/lib/SecondComponentSubContent.svelte`
+1. edit file `SecondComponentSubContent.svelte`
+    ```html
+    <script>
+      // get a props from parent component named 'textInput'
+      // via export keywords
+      export let textInput;
+    </script>
+
+    <div>
+      {#if textInput === ""}
+        <pre>I have nothing to show</pre>
+      {:else}
+        <pre>I write: {textInput}</pre>
+      {/if}
+    </div>
+
+    <style></style>
+    ```
+1. edit file `SecondComponent.svelte`
+    ```html
+    <script>
+      // We will create a child component to hold the content
+      import SecondComponentSubContent from "./SecondComponentSubContent.svelte";
+
+      // state for the text
+      let textInput = "";
+    </script>
+
+    <div>
+      <h2 class="h2">Second Component</h2>
+      <div class="custom-subcontainer">
+        <!-- Form Section -->
+        <section class="mr-4">
+          <form>
+            <!-- Two way data binding automatically using bind:value -->
+            <input
+              class="form-input"
+              type="text"
+              placeholder="Write me pl0x"
+              bind:value={textInput}
+            />
+          </form>
+        </section>
+        <section>
+          <!-- Content section  -->
+
+          <!-- pass textInput to SecondComponentSubContent -->
+          <SecondComponentSubContent {textInput} />
+        </section>
+      </div>
+    </div>
+
+    <style></style>
+    ```
+1. edit `App.svelte`
+    ```html
+    <script>
+      // import the component here
+      import FirstComponent from "./lib/FirstComponent.svelte";
+      // import the second component here
+      import SecondComponent from "./lib/SecondComponent.svelte";
+    </script>
+
+    <div class="custom-container bg-slate-200">
+      <p class="h1">Simple Svelte Apps with Tailwind</p>
+      <!-- Create new section to hold FirstComponent -->
+      <section>
+        <FirstComponent />
+      </section>
+      <!-- Create new section to hold SecondComponent -->
+      <section>
+        <SecondComponent />
+      </section>
+    </div>
+
+    <style></style>
+    ```
 
 
 ## ThirdComponent
