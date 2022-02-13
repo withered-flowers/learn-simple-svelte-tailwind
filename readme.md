@@ -236,3 +236,118 @@ Disclaimer:
 
 
 ## ThirdComponent
+1. create file `src/lib/ThirdComponent.svelte`
+1. create file `src/lib/ThirdComponentSubTable.svelte`
+1. create file `src/lib/ThirdComponentSubTableContent.svelte`
+1. edit `ThirdComponentSubTableContent.svelte`
+    ```html
+    <script>
+      export let item;
+    </script>
+
+    <tr>
+      <td>{item.first_name}</td>
+      <td>{item.last_name}</td>
+      <td>{item.email}</td>
+      <td>
+        <img src={item.avatar} alt={item.avatar} />
+      </td>
+    </tr>
+
+    <style></style>
+    ```
+1. edit `ThirdComponentSubTable.svelte`
+    ```html
+    <script setup>
+      import ThirdComponentSubTableContent from "./ThirdComponentSubTableContent.svelte";
+
+      export let extData;
+    </script>
+
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th>first_name</th>
+          <th>last_name</th>
+          <th>email</th>
+          <th>avatar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Create the loop for rendering the data  -->
+        <!-- Loop the table rows and pass the item -->
+        <!-- note that (item.id) is the key (keyed each blocks svelte) -->
+        {#each extData as item (item.id)}
+          <ThirdComponentSubTableContent {item} />
+        {/each}
+      </tbody>
+    </table>
+
+    <style></style>
+    ```
+1. edit `ThirdComponent.svelte`
+    ```html
+    <script>
+      import { onMount, onDestroy } from "svelte";
+      import ThirdComponentSubTable from "./ThirdComponentSubTable.svelte";
+
+      let extData = [];
+
+      const fetchData = async () => {
+        // fetch data from external API
+        const response = await fetch("https://reqres.in/api/users");
+        const jsonData = await response.json();
+
+        // set fetched data to state
+        extData = [...extData, ...jsonData.data.slice(0, 3)];
+      };
+
+      // we will fetch the data from the external API
+      // using the methods that we have created
+      // the fetchExternalData method
+
+      // this is the same as componentDidMount on React
+      onMount(() => {
+        fetchData();
+      });
+
+      // this is the same as componentDidUnmount on React
+      onDestroy(() => {});
+    </script>
+
+    <div>
+      <h2 class="h2">Third Component</h2>
+      <ThirdComponentSubTable {extData} />
+    </div>
+
+    <style></style>
+    ```
+1. edit `App.svelte`
+    ```html
+    <script>
+      // import the component here
+      import FirstComponent from "./lib/FirstComponent.svelte";
+      // import the second component here
+      import SecondComponent from "./lib/SecondComponent.svelte";
+      // import the third component here
+      import ThirdComponent from "./lib/ThirdComponent.svelte";
+    </script>
+
+    <div class="custom-container bg-slate-200">
+      <p class="h1">Simple Svelte Apps with Tailwind</p>
+      <!-- Create new section to hold FirstComponent -->
+      <section>
+        <FirstComponent />
+      </section>
+      <!-- Create new section to hold SecondComponent -->
+      <section>
+        <SecondComponent />
+      </section>
+      <!-- Create new section to hold ThirdComponent -->
+      <section>
+        <ThirdComponent />
+      </section>
+    </div>
+
+    <style></style>
+    ```
