@@ -1,6 +1,6 @@
 # Svelte Simple Apps with Tailwindcss
 
-## Demo [NOT DEPLOYED YET]
+## Demo
 https://simple-svelte-tailwind.web.app/
 
 ## Short Documentation 
