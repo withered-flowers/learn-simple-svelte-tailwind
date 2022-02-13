@@ -7,7 +7,6 @@ https://simple-svelte-tailwind.web.app/
 
 Disclaimer:
 - This documentation is using `pnpm`
-- This code is using Vue v3 with Composition API (not Options API)
 
 ## Initialize Apps
 1. `pnpm create vite`
