@@ -83,23 +83,75 @@ Disclaimer:
     ```
 1. edit `App.vue`
     ```html
-    <script setup>
-    // This starter template is using Vue 3 <script setup> SFCs
-    // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+    <script>
     </script>
 
-    <template>
-      <div class="custom-container bg-slate-200">
-        <p class="h1">Simple Vue Apps with Tailwind</p>
-      </div>
-    </template>
+    <div class="custom-container bg-slate-200">
+      <p class="h1">Simple Svelte Apps with Tailwind</p>
+    </div>
 
     <style></style>
+
     ```
 1. run the app `pnpm run dev`
 
 ## FirstComponent
+1. create file `src/lib/FirstComponent.svelte`
+1. edit `FirstComponent.svelte`
+    ```svelte
+    <script>
+      // every value declare will be reactive in svelte
+      // svelte reactivity is by assignments
+      let count = 0;
 
+      // method for set count state
+      const addCount = () => {
+        count++;
+      };
+
+      // method for reset count state
+      const resetCount = () => {
+        count = 0;
+      };
+    </script>
+
+    <div>
+      <h2 class="h2">First Component</h2>
+      <h3>
+        <!-- conditional rendering -->
+        {#if count === 0}
+          Don't you dare to click me !
+        {:else}
+          How dare you click me {count} time{count > 1 ? "s" : ""}
+        {/if}
+      </h3>
+      <p>
+        <!-- bind event on click with addCount -->
+        <button class="btn" on:click={addCount}>Dare-to-click</button>
+      </p>
+      <p>
+        <!-- bind event on click with resetCount -->
+        <button class="btn" on:click={resetCount}>Forget-me-not</button>
+      </p>
+    </div>
+    ```
+1. edit `App.svelte`
+    ```svelte
+    <script>
+      // import the component here
+      import FirstComponent from "./lib/FirstComponent.svelte";
+    </script>
+
+    <div class="custom-container bg-slate-200">
+      <p class="h1">Simple Svelte Apps with Tailwind</p>
+      <!-- Create new section to hold FirstComponent -->
+      <section>
+        <FirstComponent />
+      </section>
+    </div>
+
+    <style></style>
+    ```
 
 ## SecondComponent
 
